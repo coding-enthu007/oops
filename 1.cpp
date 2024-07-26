@@ -1,87 +1,81 @@
-#include<iostream> //preprocessor directive for input output stream library
-#include<string>   //another preprocessor for including string library
-using namespace std;  //The std namespace includes all the standard C++ library names. 
-                      // By including this line, you don't need to prefix standard library names with std::.
+#include<iostream> // Include the input-output stream library for using cout and endl
+#include<string>   // Include the string library for using string objects
+using namespace std;  // Use the standard namespace to avoid prefixing std:: before standard library names
 
-class Student{  // This line defines a class named Student.
-               // A class is a user-defined data type in C++ that can contain variables (attributes) and functions (methods).
-private:        //This access specifier means that the members declared under it are only accessible within the class itself.
-string* name;   //This line declares a private pointer to a string object named name.
+// Define a class named Student
+class Student{
+private:  // Private section: members here are only accessible within this class
+    string* name; // Pointer to a string object for the student's name
+    int* age;    // Pointer to an int object for the student's age
 
-int* age;    //This line declares a private pointer to an int object named age.
-             //Similar to the name pointer, it stores the memory address of an int object.
-public:      //This access specifier means that the members declared under it are accessible from outside the class.
+public:  // Public section: members here are accessible from outside the class
 
-Student(){      //default constructor  (no arguments)
-   cout<< "Default Constructor called"<<endl; //this line allocates memory for a string object and assigns the address of this memory to the name pointer.
-                                                //new string dynamically allocates memory for a string object
-   name = new string;   //This line allocates memory for a string object and assigns the address of this memory to the name pointer
-   *name = "Student";  //This line assigns the value "Student" to the string object that name points to.
+    // Default constructor
+    Student(){
+        cout << "Default Constructor called" << endl;
+        name = new string; // Allocate memory for a string object and assign it to name
+        *name = "Student"; // Initialize the string object to "Student"
 
-   age = new int;   //This line allocates memory for an int object and assigns the address of this memory to the age pointer.
+        age = new int; // Allocate memory for an int object and assign it to age
+        *age = 0; // Initialize the int object to 0
+    }
 
-   *age = 00;   //This line assigns the value 0 to the int object that age points to.
+    // Parameterized constructor: initializes a Student object with specific values
+    Student(string sname, int sage){
+        cout << "Parameterized constructor called" << endl;
+        name = new string; // Allocate memory for a string object and assign it to name
+        age = new int; // Allocate memory for an int object and assign it to age
+        *name = sname; // Initialize the string object with the provided name
+        *age = sage; // Initialize the int object with the provided age
+    }
 
-}
- Student(string sname, int sage){     // parameterized constructor(The purpose of this constructor is to initialize a Student object with specific values for name and age.)
-    cout<<"Paramertised constructor called"<< endl;
-    name = new string;  //this line allocates memory for a string object and assigns the address of this memory to the name pointer.
-    age = new int;  //This line allocates memory for an int object and assigns the address of this memory to the age pointer.
-    *name = sname;  //This line assigns the value of the parameter sname to the string object that name points to.
+    // Copy constructor: initializes a new object as a copy of an existing object
+    Student(Student& t){
+        cout << "Copy constructor called" << endl;
+        age = new int; // Allocate memory for an int object and assign it to age
+        name = new string; // Allocate memory for a string object and assign it to name
+        *name = *t.name; // Copy the value of the string object from t's name to this object's name
+        *age = *t.age; // Copy the value of the int object from t's age to this object's age
+    }
 
-    *age = sage;   //This line assigns the value of the parameter sage to the int object that age points to.
+    // Move constructor: transfers resources from an existing object to a new object
+    Student(Student&& other) noexcept{
+        cout << "Move constructor called" << endl;
+        age = other.age; // Transfer ownership of age pointer from other to this object
+        name = other.name; // Transfer ownership of name pointer from other to this object
+        other.name = nullptr; // Set other’s name pointer to nullptr to prevent accidental use or deletion
+        other.age = nullptr; // Set other’s age pointer to nullptr to prevent accidental use or deletion
+    }
 
- };
+    // Destructor: deallocates memory when an object is destroyed
+    ~Student(){
+        delete name; // Free the memory allocated for the name string
+        delete age; // Free the memory allocated for the age int
+    }
 
- Student(Student& t){       // copy constructor(This defines a copy constructor for the Student class.)
-                            //A copy constructor initializes a new object as a copy of an existing object
-    cout<<"Copy constructor called"<< endl;
-    age = new int;   //This line allocates memory for an int object and assigns the address of this memory to the age pointer.
-
-    name = new string;   //This line allocates memory for a string object and assigns the address of this memory to the name pointer.
-
-    *name = *t.name;      //This line copies the value of the string object pointed to by t.name into the string object pointed to by name.
-
-    *age = *t.age;       //This line copies the value of the int object pointed to by t.age into the int object pointed to by age.
-
- };
-
- Student(Student&& other) noexcept{   //move constructor(A move constructor initializes a new object by transferring the resources from an existing object (other) to the new object.)
-   cout<<"Move constructor called"<< endl;
-   age = other.age;   //This line transfers the ownership of the age pointer from other to the new object.
-
-   name = other.name;   // This line transfers the ownership of the name pointer from other to the new object.
-
-   other.name = nullptr;  //This line sets other's name pointer to nullptr.
-                          //This indicates that other no longer owns the string object, preventing other from accidentally deleting or modifying the string object.
-
-   other.age = nullptr;  //This line sets other's age pointer to nullptr.
-                          //This indicates that other no longer owns the int object, preventing other from accidentally deleting or modifying the int object
-   }
-
-   ~Student(){ //This defines the destructor for the Student class.
-              //A destructor is a special member function that is called when an object of the class is destroyed.
-              //The tilde (~) before the class name indicates that this is a destructor.
-      delete name;  //This line deallocates the memory that was previously allocated for the name pointer.
-
-      delete age;//This line deallocates the memory that was previously allocated for the age pointer.
-
-   }
-
-
- void display(){   //The purpose of this function is to print the details of the Student object.
-
-    cout<<"This is the object of "<< *name << " whose age is "<< *age<<endl;
- }
+    // Function to display the student's details
+    void display(){
+        cout << "This is the object of " << *name << " whose age is " << *age << endl;
+    }
 };
 
 int main(){
-    Student s("Sumaanyu",19), s2("Shreyash",20), s3;
-    Student shreyash(s2);
-    s.display(); // calling parameterized constructor
-    shreyash.display(); // calling copy constructor
-    s3.display(); // calling default constructor
-    Student newS(move(s));
-    newS.display();
+    // Create Student objects using different constructors
+    Student s("Sumaanyu", 19); // Parameterized constructor
+    Student s2("Shreyash", 20); // Parameterized constructor
+    Student s3; // Default constructor
 
+    // Create a new Student object as a copy of s2
+    Student shreyash(s2); // Copy constructor
+
+    // Display details of each Student object
+    s.display(); // Display details of the Student s
+    shreyash.display(); // Display details of the Student shreyash
+    s3.display(); // Display details of the Student s3
+
+    // Create a new Student object by moving resources from s
+    Student newS(move(s)); // Move constructor
+
+    // Display details of the newly created Student object
+    newS.display(); // Display details of the Student newS
 }
