@@ -61,16 +61,16 @@ public:  // Public section: members here are accessible from outside the class
 
 int main(){
     // Create Student objects using different constructors
-    Student s("Sumaanyu", 19); // Parameterized constructor
-    Student s2("Shreyash", 20); // Parameterized constructor
+    Student s("Abhay", 19); // Parameterized constructor
+    Student s2("Anish", 20); // Parameterized constructor
     Student s3; // Default constructor
 
     // Create a new Student object as a copy of s2
-    Student shreyash(s2); // Copy constructor
+    Student Anish(s2); // Copy constructor
 
     // Display details of each Student object
     s.display(); // Display details of the Student s
-    shreyash.display(); // Display details of the Student shreyash
+    Anish.display(); // Display details of the Student Anish 
     s3.display(); // Display details of the Student s3
 
     // Create a new Student object by moving resources from s
